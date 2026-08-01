@@ -1,0 +1,30 @@
+{
+  "weeklyCallVolume": [
+    { "day": "Mon", "calls": 240 },
+    { "day": "Tue", "calls": 280 },
+    { "day": "Wed", "calls": 260 },
+    { "day": "Thu", "calls": 310 },
+    { "day": "Fri", "calls": 295 },
+    { "day": "Sat", "calls": 180 },
+    { "day": "Sun", "calls": 120 }
+  ],
+  "scoreTrend": [
+    { "month": "Feb", "avgScore": 74 },
+    { "month": "Mar", "avgScore": 77 },
+    { "month": "Apr", "avgScore": 79 },
+    { "month": "May", "avgScore": 81 },
+    { "month": "Jun", "avgScore": 83 },
+    { "month": "Jul", "avgScore": 85 }
+  ],
+  "teamComparison": [
+    { "team": "North", "score": 84 },
+    { "team": "South", "score": 78 },
+    { "team": "East", "score": 71 },
+    { "team": "West", "score": 88 }
+  ],
+  "complianceBreakdown": [
+    { "name": "Compliant", "value": 82 },
+    { "name": "Minor Issues", "value": 12 },
+    { "name": "Flagged", "value": 6 }
+  ]
+}

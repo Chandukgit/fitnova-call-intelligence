@@ -1,0 +1,8 @@
+[
+  { "id": "adv-1", "name": "Sarah Johnson", "team": "North Region", "avgScore": 92, "totalCalls": 58, "compliance": 96 },
+  { "id": "adv-2", "name": "Mike Chen", "team": "West Region", "avgScore": 89, "totalCalls": 64, "compliance": 94 },
+  { "id": "adv-3", "name": "Priya Menon", "team": "South Region", "avgScore": 85, "totalCalls": 49, "compliance": 91 },
+  { "id": "adv-4", "name": "James Carter", "team": "East Region", "avgScore": 74, "totalCalls": 41, "compliance": 82 },
+  { "id": "adv-5", "name": "Fatima Noor", "team": "North Region", "avgScore": 81, "totalCalls": 55, "compliance": 88 },
+  { "id": "adv-6", "name": "David Park", "team": "West Region", "avgScore": 68, "totalCalls": 37, "compliance": 75 }
+]

@@ -1,0 +1,6 @@
+[
+  { "id": "team-1", "name": "North Region", "leader": "Ravi Kumar", "advisors": 7, "avgScore": 84 },
+  { "id": "team-2", "name": "South Region", "leader": "Ananya Rao", "advisors": 6, "avgScore": 78 },
+  { "id": "team-3", "name": "East Region", "leader": "Vikram Singh", "advisors": 6, "avgScore": 71 },
+  { "id": "team-4", "name": "West Region", "leader": "Priya Menon", "advisors": 7, "avgScore": 88 }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "call-101",
+    "customerName": "Ethan Brooks",
+    "advisorName": "Sarah Johnson",
+    "date": "2026-07-28",
+    "duration": "12:45",
+    "score": 92,
+    "status": "Completed",
+    "topic": "Membership Renewal"
+  },
+  {
+    "id": "call-102",
+    "customerName": "Grace Kim",
+    "advisorName": "Mike Chen",
+    "date": "2026-07-28",
+    "duration": "08:20",
+    "score": 76,
+    "status": "Flagged",
+    "topic": "Personal Training Upsell"
+  },
+  {
+    "id": "call-103",
+    "customerName": "Liam Torres",
+    "advisorName": "Priya Menon",
+    "date": "2026-07-27",
+    "duration": "15:02",
+    "score": 88,
+    "status": "Completed",
+    "topic": "New Enquiry"
+  },
+  {
+    "id": "call-104",
+    "customerName": "Olivia White",
+    "advisorName": "James Carter",
+    "date": "2026-07-27",
+    "duration": "06:10",
+    "score": 58,
+    "status": "Flagged",
+    "topic": "Cancellation Request"
+  },
+  {
+    "id": "call-105",
+    "customerName": "Noah Patel",
+    "advisorName": "Fatima Noor",
+    "date": "2026-07-26",
+    "duration": "10:33",
+    "score": 81,
+    "status": "Pending",
+    "topic": "Diet Plan Consultation"
+  },
+  {
+    "id": "call-106",
+    "customerName": "Ava Wilson",
+    "advisorName": "David Park",
+    "date": "2026-07-26",
+    "duration": "09:47",
+    "score": 65,
+    "status": "Completed",
+    "topic": "Membership Renewal"
+  }
+]

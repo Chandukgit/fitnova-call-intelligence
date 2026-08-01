@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------
+   FitNova Theme Tokens
+   Change colors here and they update across the app.
+--------------------------------------------------- */
+@theme {
+  --color-primary: #d62828;
+  --color-primary-dark: #b91f1f;
+  --color-primary-light: #fbe4e4;
+
+  --color-bg: #ffffff;
+  --color-card: #ffffff;
+  --color-border: #e5e7eb;
+  --color-text: #374151;
+  --color-text-soft: #6b7280;
+  --color-sidebar: #ffffff;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* Simple scrollbar styling, kept minimal */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
+  border-radius: 8px;
+}

@@ -1,0 +1,13 @@
+{
+  "call-101": [
+    { "id": "tag-1", "label": "Positive Close", "type": "positive" }
+  ],
+  "call-102": [
+    { "id": "tag-2", "label": "Pricing Hesitation", "type": "warning" },
+    { "id": "tag-3", "label": "Slow Response", "type": "warning" }
+  ],
+  "call-104": [
+    { "id": "tag-4", "label": "Compliance Miss", "type": "critical" },
+    { "id": "tag-5", "label": "Cancellation Risk", "type": "critical" }
+  ]
+}

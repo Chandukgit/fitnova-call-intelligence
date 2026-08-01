@@ -1,0 +1,26 @@
+{
+  "call-101": {
+    "overallScore": 92,
+    "communication": 94,
+    "compliance": 96,
+    "productKnowledge": 88,
+    "customerSatisfaction": 90,
+    "summary": "Advisor handled the renewal smoothly, offered a relevant discount, and closed the call confidently.",
+    "recommendations": [
+      "Continue leading with loyalty offers for long-term customers.",
+      "Mention the referral program next time to increase upsell."
+    ]
+  },
+  "call-102": {
+    "overallScore": 76,
+    "communication": 70,
+    "compliance": 82,
+    "productKnowledge": 75,
+    "customerSatisfaction": 68,
+    "summary": "Advisor was slow to address pricing concerns, which caused some hesitation from the customer.",
+    "recommendations": [
+      "Lead with value before discussing price.",
+      "Use a clearer breakdown of package tiers."
+    ]
+  }
+}
