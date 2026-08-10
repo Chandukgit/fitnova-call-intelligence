@@ -1,11 +1,12 @@
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
-import { LayoutDashboard, PhoneCall, BarChart2, FileText, Settings } from "lucide-react";
+import { LayoutDashboard, PhoneCall, BarChart2, FileText, Settings, Upload } from "lucide-react";
 
 // Sidebar menu items. Each has an icon, a label, and a route.
 const menuItems = [
   { label: "Dashboard", icon: LayoutDashboard, path: "/director" },
   { label: "Calls", icon: PhoneCall, path: "/calls" },
+  { label: "Upload", icon: Upload, path: "/upload" },
   { label: "Analytics", icon: BarChart2, path: "/analytics" },
   { label: "Reports", icon: FileText, path: "/reports" },
   { label: "Settings", icon: Settings, path: "/settings" },

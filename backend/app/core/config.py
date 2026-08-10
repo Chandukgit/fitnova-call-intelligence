@@ -4,7 +4,7 @@ class Settings(BaseSettings):
     DATABASE_URL : str 
     GROQ_API_KEY : str 
     SECRET_KEY : str 
-    ENVIRONMENT: str = "developement"
+    ENVIRONMENT: str = "development"
     DEBUG : bool = True 
 
     model_config = SettingsConfigDict(

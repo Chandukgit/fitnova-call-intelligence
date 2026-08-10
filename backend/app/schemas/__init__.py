@@ -7,3 +7,4 @@ from app.schemas.transcript import *
 from app.schemas.analysis import *
 from app.schemas.issue_tag import *
 from app.schemas.feedback import *
+from app.schemas.user import * 

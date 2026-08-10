@@ -23,7 +23,7 @@ function RecentCallsTable({ calls }) {
         if (col.accessor === "date") return formatDate(row.date);
 
         if (col.accessor === "score")
-          return <span className={`font-semibold ${getScoreColor(row.score)}`}>{row.score}</span>;
+          return <span className={`font-semibold ${row.score == null ? "text-[var(--color-text-soft)]" : getScoreColor(row.score)}`}>{row.score ?? "—"}</span>;
 
         if (col.accessor === "status")
           return <Badge colorClass={getStatusColor(row.status)}>{row.status}</Badge>;

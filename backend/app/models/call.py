@@ -1,22 +1,25 @@
 from datetime import datetime
 
-from sqlalchemy import Enum as SqlEnum 
-from app.core.enums import CallStatus, ProcessingStatus
-
 from sqlalchemy import (
     String,
     Integer,
+    BigInteger,
     DateTime,
-    ForeignKey
+    ForeignKey,
+    Enum as SqlEnum,
 )
 
 from sqlalchemy.orm import (
     Mapped,
     mapped_column,
-    relationship
+    relationship,
 )
 
 from app.database.base import Base
+from app.core.enums import (
+    CallStatus,
+    ProcessingStatus,
+)
 
 
 class Call(Base):
@@ -26,94 +29,93 @@ class Call(Base):
 
     advisor_id: Mapped[int] = mapped_column(
         ForeignKey("advisors.id"),
-        nullable=False
+        nullable=False,
     )
 
     customer_id: Mapped[int] = mapped_column(
         ForeignKey("customers.id"),
-        nullable=False
+        nullable=False,
     )
 
-    call_sid: Mapped[str] = mapped_column(
-        String(100),
-        unique=True,
-        nullable=False
+    original_filename: Mapped[str] = mapped_column(
+        String(255),
+        nullable=False,
     )
 
-    recording_url: Mapped[str] = mapped_column(
+    audio_path: Mapped[str] = mapped_column(
         String(500),
-        nullable=False
+        nullable=False,
     )
 
-    duration_seconds: Mapped[int] = mapped_column(
+    mime_type: Mapped[str] = mapped_column(
+        String(100),
+        nullable=False,
+    )
+
+    file_size: Mapped[int] = mapped_column(
+        BigInteger,
+        nullable=False,
+    )
+
+    duration_seconds: Mapped[int | None] = mapped_column(
         Integer,
-        nullable=False
+        nullable=True,
     )
 
-    started_at: Mapped[datetime] = mapped_column(
-        DateTime,
-        nullable=False
-    )
-
-    ended_at: Mapped[datetime] = mapped_column(
-        DateTime,
-        nullable=False
+    language: Mapped[str | None] = mapped_column(
+        String(30),
+        nullable=True,
     )
 
     call_status: Mapped[CallStatus] = mapped_column(
         SqlEnum(CallStatus),
-        default=CallStatus.PENDING,
-        nullable=False
-    )
-
-    language: Mapped[str] = mapped_column(
-        String(30),
-        nullable=True
+        default=CallStatus.UPLOADED,
+        nullable=False,
     )
 
     transcription_status: Mapped[ProcessingStatus] = mapped_column(
-    SqlEnum(ProcessingStatus),
-    default=ProcessingStatus.PENDING,
-    nullable=False
+        SqlEnum(ProcessingStatus),
+        default=ProcessingStatus.PENDING,
+        nullable=False,
     )
 
     analysis_status: Mapped[ProcessingStatus] = mapped_column(
-    SqlEnum(ProcessingStatus),
-    default=ProcessingStatus.PENDING,
-    nullable=False
+        SqlEnum(ProcessingStatus),
+        default=ProcessingStatus.PENDING,
+        nullable=False,
     )
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
-        default=datetime.utcnow
+        default=datetime.utcnow,
     )
 
     updated_at: Mapped[datetime] = mapped_column(
         DateTime,
         default=datetime.utcnow,
-        onupdate=datetime.utcnow
+        onupdate=datetime.utcnow,
     )
 
     advisor = relationship(
         "Advisor",
-        back_populates="calls"
+        back_populates="calls",
     )
 
     customer = relationship(
         "Customer",
-        back_populates="calls"
+        back_populates="calls",
     )
 
     transcript = relationship(
-    "Transcript",
-    back_populates="call",
-    uselist=False,
-    cascade="all, delete-orphan"
+        "Transcript",
+        back_populates="call",
+        uselist=False,
+        cascade="all, delete-orphan",
     )
-    
+
     analysis = relationship(
-    "Analysis",
-    back_populates="call",
-    uselist=False,
-    cascade="all, delete-orphan"
-)
+        "Analysis",
+        back_populates="call",
+        uselist=False,
+        cascade="all, delete-orphan",
+    )

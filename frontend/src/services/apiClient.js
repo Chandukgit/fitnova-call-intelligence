@@ -1,13 +1,16 @@
 import axios from "axios";
 
-// This is a placeholder Axios instance.
-// When the backend is ready, just update the baseURL below
-// and start replacing mock data calls in services/ with real requests.
 const apiClient = axios.create({
-  baseURL: "http://localhost:8000/api",
+  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8000",
   headers: {
     "Content-Type": "application/json",
   },
+});
+
+apiClient.interceptors.request.use((config) => {
+  const token = localStorage.getItem("fitnova_access_token");
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
 });
 
 export default apiClient;

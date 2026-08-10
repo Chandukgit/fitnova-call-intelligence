@@ -67,4 +67,9 @@ class Advisor(Base):
     "Call",
     back_populates="advisor",
     cascade="all, delete-orphan"
-)
+    )
+    user = relationship(
+    "User",
+    back_populates="advisor",
+    uselist=False,
+    )

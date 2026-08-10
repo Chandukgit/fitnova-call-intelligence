@@ -3,18 +3,16 @@ import DashboardLayout from "../../components/layout/DashboardLayout";
 import Card from "../../components/common/Card";
 import RecentCallsTable from "../../components/dashboard/RecentCallsTable";
 import LoadingSkeleton from "../../components/common/LoadingSkeleton";
-import { getCalls } from "../../services/mockService";
+import { getCallData } from "../../services/fitnovaService";
 
 // Lists every call so the user can click into any of them.
 function CallsListPage() {
   const [calls, setCalls] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    getCalls().then((data) => {
-      setCalls(data);
-      setLoading(false);
-    });
+    getCallData().then(setCalls).catch(() => setError("Unable to load calls.")).finally(() => setLoading(false));
   }, []);
 
   if (loading) {
@@ -29,6 +27,8 @@ function CallsListPage() {
     <DashboardLayout>
       <h1 className="text-xl font-semibold text-[var(--color-text)] mb-1">Calls</h1>
       <p className="text-sm text-[var(--color-text-soft)] mb-6">Every recorded call, analyzed by AI.</p>
+
+      {error && <p className="text-sm text-red-600 mb-4">{error}</p>}
 
       <Card title="All Calls">
         <RecentCallsTable calls={calls} />

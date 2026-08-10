@@ -1,13 +1,6 @@
 from enum import Enum
 
 
-class CallStatus(str, Enum):
-    PENDING = "PENDING"
-    PROCESSING = "PROCESSING"
-    COMPLETED = "COMPLETED"
-    FAILED = "FAILED"
-
-
 class ProcessingStatus(str, Enum):
     PENDING = "PENDING"
     PROCESSING = "PROCESSING"
@@ -32,3 +25,16 @@ class CustomerSentiment(str, Enum):
     POSITIVE = "POSITIVE"
     NEUTRAL = "NEUTRAL"
     NEGATIVE = "NEGATIVE"
+
+
+class UserRole(str, Enum):
+    ADMIN = "ADMIN"
+    MANAGER = "MANAGER"
+    ADVISOR = "ADVISOR"
+
+class CallStatus(str, Enum):
+    UPLOADED = "UPLOADED"
+    TRANSCRIBING = "TRANSCRIBING"
+    ANALYZING = "ANALYZING"
+    COMPLETED = "COMPLETED"
+    FAILED = "FAILED"

@@ -8,7 +8,7 @@ import ScoreTrendChart from "../../components/charts/ScoreTrendChart";
 import Card from "../../components/common/Card";
 import Table from "../../components/common/Table";
 import LoadingSkeleton from "../../components/common/LoadingSkeleton";
-import { getOrganization, getTeams, getAdvisors, getCalls, getAnalytics } from "../../services/mockService";
+import { getOrganizations, getTeams, getAdvisors, getCallData, getAnalytics, getAnalysesRaw } from "../../services/fitnovaService";
 
 function DirectorDashboard() {
   const [org, setOrg] = useState(null);
@@ -19,17 +19,14 @@ function DirectorDashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Load all the mock data needed for this dashboard.
-    Promise.all([getOrganization(), getTeams(), getAdvisors(), getCalls(), getAnalytics()]).then(
-      ([orgData, teamsData, advisorsData, callsData, analyticsData]) => {
-        setOrg(orgData);
-        setTeams(teamsData);
-        setAdvisors(advisorsData);
+    Promise.all([getOrganizations(), getTeams(), getAdvisors(), getCallData(), getAnalytics(), getAnalysesRaw()]).then(
+      ([organizations, teamsData, advisorsData, callsData, analyticsData, analyses]) => {
+        setOrg(organizations[0] || { name: "No organization" });
+        setTeams(teamsData.map((team) => ({ ...team, advisors: advisorsData.filter((advisor) => advisor.team_id === team.id).length, avgScore: 0, leader: "—" })));
+        setAdvisors(advisorsData.map((advisor) => ({ ...advisor, name: `${advisor.first_name} ${advisor.last_name}`, team: teamsData.find((team) => team.id === advisor.team_id)?.name || "—", avgScore: Math.round((analyses.filter((analysis) => callsData.find((call) => call.id === analysis.call_id)?.advisor_id === advisor.id).reduce((sum, analysis) => sum + (analysis.overall_score || 0), 0) / Math.max(1, analyses.filter((analysis) => callsData.find((call) => call.id === analysis.call_id)?.advisor_id === advisor.id).length))) })));
         setCalls(callsData);
         setAnalytics(analyticsData);
-        setLoading(false);
-      }
-    );
+      }).finally(() => setLoading(false));
   }, []);
 
   const topAdvisors = [...advisors].sort((a, b) => b.avgScore - a.avgScore).slice(0, 5);
@@ -49,10 +46,10 @@ function DirectorDashboard() {
 
       {/* KPI Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <StatCard label="Total Calls" value={org.totalCallsThisMonth} icon={PhoneCall} />
-        <StatCard label="Average Score" value={82} suffix="%" icon={TrendingUp} />
-        <StatCard label="Compliance" value={91} suffix="%" icon={ShieldCheck} />
-        <StatCard label="Teams" value={org.totalTeams} icon={Users} />
+        <StatCard label="Total Calls" value={calls.length} icon={PhoneCall} />
+        <StatCard label="Average Score" value={analytics.scoreTrend[0]?.avgScore || 0} suffix="%" icon={TrendingUp} />
+        <StatCard label="Completed Calls" value={calls.filter((call) => call.status === "COMPLETED").length} icon={ShieldCheck} />
+        <StatCard label="Teams" value={teams.length} icon={Users} />
       </div>
 
       {/* Charts Row */}

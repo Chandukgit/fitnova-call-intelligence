@@ -7,7 +7,7 @@ import Card from "../../components/common/Card";
 import Table from "../../components/common/Table";
 import LoadingSkeleton from "../../components/common/LoadingSkeleton";
 import { Users, Star, PhoneCall, ClipboardList } from "lucide-react";
-import { getAdvisors, getCalls, getAnalytics } from "../../services/mockService";
+import { getAdvisors, getCallData, getAnalytics, getAnalysesRaw, getTeams } from "../../services/fitnovaService";
 
 function LeaderDashboard() {
   const [advisors, setAdvisors] = useState([]);
@@ -16,18 +16,16 @@ function LeaderDashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    Promise.all([getAdvisors(), getCalls(), getAnalytics()]).then(
-      ([advisorsData, callsData, analyticsData]) => {
-        setAdvisors(advisorsData);
+    Promise.all([getAdvisors(), getCallData(), getAnalytics(), getAnalysesRaw(), getTeams()]).then(
+      ([advisorsData, callsData, analyticsData, analyses, teams]) => {
+        setAdvisors(advisorsData.map((advisor) => ({ ...advisor, name: `${advisor.first_name} ${advisor.last_name}`, totalCalls: callsData.filter((call) => call.advisor_id === advisor.id).length, avgScore: Math.round(analyses.filter((analysis) => callsData.find((call) => call.id === analysis.call_id)?.advisor_id === advisor.id).reduce((sum, analysis) => sum + (analysis.overall_score || 0), 0) / Math.max(1, analyses.filter((analysis) => callsData.find((call) => call.id === analysis.call_id)?.advisor_id === advisor.id).length)), team: teams.find((team) => team.id === advisor.team_id)?.name || "—" })));
         setCalls(callsData);
         setAnalytics(analyticsData);
-        setLoading(false);
-      }
-    );
+      }).finally(() => setLoading(false));
   }, []);
 
   const ranking = [...advisors].sort((a, b) => b.avgScore - a.avgScore);
-  const pendingReviews = calls.filter((c) => c.status === "Pending");
+  const pendingReviews = calls.filter((c) => c.status !== "COMPLETED");
 
   if (loading) {
     return (
@@ -44,7 +42,7 @@ function LeaderDashboard() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <StatCard label="Team Members" value={advisors.length} icon={Users} />
-        <StatCard label="Team Avg Score" value={84} suffix="%" icon={Star} />
+        <StatCard label="Team Avg Score" value={analytics.scoreTrend[0]?.avgScore || 0} suffix="%" icon={Star} />
         <StatCard label="Calls This Week" value={calls.length} icon={PhoneCall} />
         <StatCard label="Pending Reviews" value={pendingReviews.length} icon={ClipboardList} />
       </div>

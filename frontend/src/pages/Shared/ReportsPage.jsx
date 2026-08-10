@@ -3,7 +3,7 @@ import DashboardLayout from "../../components/layout/DashboardLayout";
 import Card from "../../components/common/Card";
 import RecentCallsTable from "../../components/dashboard/RecentCallsTable";
 import LoadingSkeleton from "../../components/common/LoadingSkeleton";
-import { getCalls } from "../../services/mockService";
+import { getCallData } from "../../services/fitnovaService";
 
 // A simple reports page. For now it just reuses the calls table,
 // since real reporting will depend on the backend later.
@@ -12,10 +12,7 @@ function ReportsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getCalls().then((data) => {
-      setCalls(data);
-      setLoading(false);
-    });
+    getCallData().then(setCalls).finally(() => setLoading(false));
   }, []);
 
   if (loading) {
@@ -30,7 +27,7 @@ function ReportsPage() {
     <DashboardLayout>
       <h1 className="text-xl font-semibold text-[var(--color-text)] mb-1">Reports</h1>
       <p className="text-sm text-[var(--color-text-soft)] mb-6">
-        Call summary report (mock data - full reporting comes with the backend).
+        Call summary report based on recorded calls.
       </p>
 
       <Card title="All Calls">

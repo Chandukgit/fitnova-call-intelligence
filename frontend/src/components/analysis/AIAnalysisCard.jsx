@@ -25,7 +25,7 @@ function AIAnalysisCard({ analysis }) {
         {metrics.map((m) => (
           <div key={m.label}>
             <p className="text-xs text-[var(--color-text-soft)] mb-1">{m.label}</p>
-            <p className={`text-sm font-semibold ${getScoreColor(m.value)}`}>{m.value}</p>
+            <p className={`text-sm font-semibold ${m.value == null ? "text-[var(--color-text-soft)]" : getScoreColor(m.value)}`}>{m.value ?? "—"}</p>
           </div>
         ))}
       </div>

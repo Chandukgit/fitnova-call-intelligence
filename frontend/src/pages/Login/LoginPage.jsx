@@ -3,20 +3,28 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Dumbbell } from "lucide-react";
 import Button from "../../components/common/Button";
+import { login } from "../../services/fitnovaService";
 
-// Simple login page. No real authentication - just redirects
-// to the dashboard that matches the selected role.
 function LoginPage() {
   const navigate = useNavigate();
-  const [role, setRole] = useState("director");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    // No auth yet - just navigate to the right dashboard based on role.
-    navigate(`/${role}`);
+    setError("");
+    setLoading(true);
+    try {
+      const user = await login(email, password, rememberMe);
+      navigate({ ADMIN: "/director", MANAGER: "/leader", ADVISOR: "/advisor" }[user.role] || "/calls");
+    } catch (requestError) {
+      setError(requestError.response?.data?.detail || "Unable to sign in. Check your credentials and try again.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -64,18 +72,7 @@ function LoginPage() {
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-[var(--color-text)] mb-1">Role</label>
-              <select
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                className="w-full px-3 py-2 border border-[var(--color-border)] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30"
-              >
-                <option value="director">Sales Director</option>
-                <option value="leader">Team Leader</option>
-                <option value="advisor">Advisor</option>
-              </select>
-            </div>
+            {error && <p className="text-sm text-red-600" role="alert">{error}</p>}
 
             <div className="flex items-center justify-between text-sm">
               <label className="flex items-center gap-2 text-[var(--color-text-soft)]">
@@ -93,7 +90,7 @@ function LoginPage() {
             </div>
 
             <Button type="submit" className="w-full">
-              Login
+              {loading ? "Signing in…" : "Login"}
             </Button>
           </form>
         </motion.div>

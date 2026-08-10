@@ -5,7 +5,7 @@ import StatCard from "../../components/dashboard/StatCard";
 import RecentCallsTable from "../../components/dashboard/RecentCallsTable";
 import Card from "../../components/common/Card";
 import LoadingSkeleton from "../../components/common/LoadingSkeleton";
-import { getCalls, getScores } from "../../services/mockService";
+import { getCallData, getAnalysesRaw, getStoredUser } from "../../services/fitnovaService";
 
 function AdvisorDashboard() {
   const [calls, setCalls] = useState([]);
@@ -13,12 +13,13 @@ function AdvisorDashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // In this mock, we pretend all calls belong to "Sarah Johnson".
-    Promise.all([getCalls(), getScores("call-101")]).then(([callsData, scoreData]) => {
-      setCalls(callsData.filter((c) => c.advisorName === "Sarah Johnson"));
-      setFeedback(scoreData);
-      setLoading(false);
-    });
+    const user = getStoredUser();
+    Promise.all([getCallData(), getAnalysesRaw()]).then(([callsData, analyses]) => {
+      const myCalls = callsData.filter((call) => call.advisor_id === user?.advisor_id);
+      setCalls(myCalls);
+      const latest = analyses.filter((analysis) => myCalls.some((call) => call.id === analysis.call_id)).sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0];
+      setFeedback(latest && { ...latest, overallScore: latest.overall_score, recommendations: latest.recommendation ? latest.recommendation.split("\n") : [] });
+    }).finally(() => setLoading(false));
   }, []);
 
   if (loading) {
@@ -29,14 +30,15 @@ function AdvisorDashboard() {
     );
   }
 
-  const avgScore = calls.length
-    ? Math.round(calls.reduce((sum, c) => sum + c.score, 0) / calls.length)
+  const callsWithScore = calls.filter((c) => typeof c.score === "number" && c.score !== null);
+  const avgScore = callsWithScore.length
+    ? Math.round(callsWithScore.reduce((sum, c) => sum + c.score, 0) / callsWithScore.length)
     : 0;
 
   return (
     <DashboardLayout role="Advisor">
       <h1 className="text-xl font-semibold text-[var(--color-text)] mb-1">My Dashboard</h1>
-      <p className="text-sm text-[var(--color-text-soft)] mb-6">Sarah Johnson · North Region</p>
+      <p className="text-sm text-[var(--color-text-soft)] mb-6">Your recent call performance.</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <StatCard label="My Calls" value={calls.length} icon={PhoneCall} />
@@ -51,7 +53,7 @@ function AdvisorDashboard() {
 
         <Card title="Improvement Tips">
           <ul className="space-y-2">
-            {feedback?.recommendations.map((tip, index) => (
+            {(feedback?.recommendations || []).map((tip, index) => (
               <li key={index} className="flex items-start gap-2 text-sm text-[var(--color-text)]">
                 <Lightbulb size={16} className="text-[var(--color-primary)] mt-0.5 shrink-0" />
                 <span>{tip}</span>
