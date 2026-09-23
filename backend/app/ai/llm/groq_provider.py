@@ -14,7 +14,7 @@ class GroqProvider(LLMBase):
             api_key=settings.GROQ_API_KEY,
         )
 
-        self.model = "llama-3.3-70b-versatile"
+        self.model = "qwen/qwen3.8-27b"
 
     def generate(
         self,

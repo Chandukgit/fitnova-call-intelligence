@@ -14,7 +14,7 @@ from app.api.routers.user import router as user_router
 from app.core.handlers import register_exception_handlers
 from app.api.routers.auth import router as auth_router
 from app.api.routers.upload import router as upload_router
-
+from app.api.routers.knowledge import router as knowledge_router
 
 app = FastAPI(
     title="FitNova Call Intelligence API",
@@ -50,7 +50,7 @@ app.include_router(user_router)
 
 app.include_router(upload_router)
 
-
+app.include_router(knowledge_router)
 @app.get("/", tags=["Root"])
 def root():
     return {

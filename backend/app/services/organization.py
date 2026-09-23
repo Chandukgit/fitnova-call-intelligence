@@ -110,4 +110,20 @@ class OrganizationService:
         )
 
 
+    def create(self, db: Session, obj: OrganizationCreate) -> Organization:
+        return self.create_organization(db, obj)
+
+    def get(self, db: Session, id: int) -> Organization:
+        return self.get_organization(db, id)
+
+    def get_all(self, db: Session) -> list[Organization]:
+        return self.get_organizations(db)
+
+    def update(self, db: Session, id: int, obj: OrganizationUpdate) -> Organization:
+        return self.update_organization(db, id, obj)
+
+    def delete(self, db: Session, id: int) -> None:
+        return self.delete_organization(db, id)
+
+
 organization_service = OrganizationService()

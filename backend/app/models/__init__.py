@@ -8,3 +8,4 @@ from app.models.analysis import Analysis
 from app.models.issue_tag import IssueTag
 from app.models.feedback import Feedback
 from app.models.user import User
+from app.models.knowledge import Document, DocumentChunk
