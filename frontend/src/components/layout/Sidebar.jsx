@@ -1,12 +1,13 @@
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
-import { LayoutDashboard, PhoneCall, BarChart2, FileText, Settings, Upload } from "lucide-react";
+import { LayoutDashboard, PhoneCall, BarChart2, FileText, Settings, Upload, HelpCircle } from "lucide-react";
 
 // Sidebar menu items. Each has an icon, a label, and a route.
 const menuItems = [
   { label: "Dashboard", icon: LayoutDashboard, path: "/director" },
   { label: "Calls", icon: PhoneCall, path: "/calls" },
   { label: "Upload", icon: Upload, path: "/upload" },
+  { label: "Knowledge Hub", icon: HelpCircle, path: "/knowledge" },
   { label: "Analytics", icon: BarChart2, path: "/analytics" },
   { label: "Reports", icon: FileText, path: "/reports" },
   { label: "Settings", icon: Settings, path: "/settings" },
@@ -26,10 +27,9 @@ function Sidebar({ isOpen }) {
             key={item.path}
             to={item.path}
             className={({ isActive }) =>
-              `flex items-center gap-3 px-5 py-3 text-sm font-medium transition-colors ${
-                isActive
-                  ? "text-[var(--color-primary)] bg-[var(--color-primary-light)] border-r-2 border-[var(--color-primary)]"
-                  : "text-[var(--color-text-soft)] hover:bg-gray-50"
+              `flex items-center gap-3 px-5 py-3 text-sm font-medium transition-colors ${isActive
+                ? "text-[var(--color-primary)] bg-[var(--color-primary-light)] border-r-2 border-[var(--color-primary)]"
+                : "text-[var(--color-text-soft)] hover:bg-gray-50"
               }`
             }
           >

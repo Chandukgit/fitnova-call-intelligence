@@ -12,6 +12,7 @@ import SettingsPage from "../pages/Shared/SettingsPage";
 import NotFoundPage from "../pages/Shared/NotFoundPage";
 import UploadPage from "../pages/Shared/UploadPage";
 import ProtectedRoute from "./ProtectedRoute";
+import KnowledgeAssistantPage from "../pages/Shared/KnowledgeAssistantPage";
 
 // All app routes live here, in one simple, readable place.
 function AppRoutes() {
@@ -29,7 +30,7 @@ function AppRoutes() {
       <Route path="/analytics" element={<ProtectedRoute><AnalyticsPage /></ProtectedRoute>} />
       <Route path="/reports" element={<ProtectedRoute><ReportsPage /></ProtectedRoute>} />
       <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
-
+      <Route path="/knowledge" element={<ProtectedRoute><KnowledgeAssistantPage /></ProtectedRoute>} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
